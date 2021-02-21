@@ -171,6 +171,8 @@ public class FirstPersonAIO : MonoBehaviour {
 
     public Rigidbody fps_Rigidbody;
 
+    private Vector3 jumpDirection;
+
     #endregion
 
     #region Headbobbing Settings
@@ -393,7 +395,7 @@ public class FirstPersonAIO : MonoBehaviour {
         #endregion
 
         #region Movement Settings - FixedUpdate
-        
+
         if(useStamina){
             isSprinting = Input.GetKey(sprintKey) && !isCrouching && staminaInternal > 0 && (Mathf.Abs(fps_Rigidbody.velocity.x) > 0.01f || Mathf.Abs(fps_Rigidbody.velocity.z) > 0.01f);
             if(isSprinting){
@@ -416,8 +418,8 @@ public class FirstPersonAIO : MonoBehaviour {
 
         Vector3 MoveDirection = Vector3.zero;
         speed = walkByDefault ? isCrouching ? walkSpeedInternal : (isSprinting ? sprintSpeedInternal : walkSpeedInternal) : (isSprinting ? walkSpeedInternal : sprintSpeedInternal);
-  
 
+        
         if(advanced.maxSlopeAngle>0){
             if(advanced.isTouchingUpright && advanced.isTouchingWalkable){
 
@@ -457,18 +459,36 @@ public class FirstPersonAIO : MonoBehaviour {
         if(inputXY.magnitude > 1) { inputXY.Normalize(); }
 
             #region Jump
+
+            if (advanced.isTouchingWalkable)
+            {
+                GetCurrentLook(transform.forward);
+            }
+
+            if(!IsGrounded)
+            {
+                if (Input.GetKey(KeyCode.Z))
+                {
+                    MoveDirection = jumpDirection * speed;
+                }
+                else if (Input.GetKey(KeyCode.S))
+                {
+                    MoveDirection = -0.3f * jumpDirection * speed;
+                }
+            }
+
             yVelocity = fps_Rigidbody.velocity.y;
-            
+
             if(IsGrounded && jumpInput && jumpPowerInternal > 0 && !didJump){
                 if(advanced.maxSlopeAngle>0){
                     if(advanced.isTouchingFlat || advanced.isTouchingWalkable){
-                            didJump=true;
-                            jumpInput=false;
-                            yVelocity += fps_Rigidbody.velocity.y<0.01f? jumpPowerInternal : jumpPowerInternal/3;
-                            advanced.isTouchingWalkable = false;
-                            advanced.isTouchingFlat = false;
-                            advanced.isTouchingUpright = false;
-                            fps_Rigidbody.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezeRotation;
+                        didJump=true;
+                        jumpInput=false;
+                        yVelocity += fps_Rigidbody.velocity.y<0.01f? jumpPowerInternal : jumpPowerInternal/3;
+                        advanced.isTouchingWalkable = false;
+                        advanced.isTouchingFlat = false;
+                        advanced.isTouchingUpright = false;
+                        fps_Rigidbody.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezeRotation;
                     }
                     
                 }else{
@@ -476,7 +496,7 @@ public class FirstPersonAIO : MonoBehaviour {
                     jumpInput=false;
                     yVelocity += jumpPowerInternal;
                 }
-        
+
             }
 
             if(advanced.maxSlopeAngle>0){
@@ -755,7 +775,10 @@ public class FirstPersonAIO : MonoBehaviour {
           
     }
 
-
+    private void GetCurrentLook(Vector3 currentLook)
+    {
+        jumpDirection = currentLook;
+    }
 
     private void OnCollisionEnter(Collision CollisionData){
         for(int i = 0; i<CollisionData.contactCount; i++){
