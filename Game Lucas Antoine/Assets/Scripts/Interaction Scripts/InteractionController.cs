@@ -11,6 +11,8 @@ public class InteractionController : MonoBehaviour
         public InteractionInputData interactionInputData;
         public InteractionData interactionData;
 
+        [Space, Header("UI")] [SerializeField] private InteractionUIPanel uiPanel;
+
         [Space] [Header("Ray Settings")] 
         public float rayDistance;
         public float raySpehereRadius;
@@ -59,6 +61,7 @@ public class InteractionController : MonoBehaviour
                     {
                         // We assign this interactable to our inter data
                         interactionData.Interactable = _interactable;
+                        uiPanel.SetToolTip(_interactable.ToolTipMessage);
                     }
                     else // If not => means there is an int in out data
                     {
@@ -66,6 +69,7 @@ public class InteractionController : MonoBehaviour
                         if (!interactionData.IsSameInteractable(_interactable))
                         {
                             interactionData.Interactable = _interactable;
+                            uiPanel.SetToolTip(_interactable.ToolTipMessage);
                         }
                     }
                 }
@@ -74,6 +78,7 @@ public class InteractionController : MonoBehaviour
             {
                 // If dont hit anything => reset data
                 interactionData.ResetData();
+                uiPanel.ResetUI();
             }
             
             Debug.DrawRay(_ray.origin, _ray.direction * rayDistance,_hitSomething ? Color.green : Color.red);
@@ -94,6 +99,7 @@ public class InteractionController : MonoBehaviour
             {
                 m_interacting = false;
                 m_holdTimer = 0f;
+                uiPanel.UpdateProgressBar(0);
             }
 
             if (m_interacting)
@@ -105,7 +111,10 @@ public class InteractionController : MonoBehaviour
                 {
                     m_holdTimer += Time.deltaTime;
 
-                    if (m_holdTimer >= interactionData.Interactable.HoldDuration)
+                    float heldPercent = m_holdTimer / interactionData.Interactable.HoldDuration;
+                    uiPanel.UpdateProgressBar(heldPercent);
+
+                    if (heldPercent > 1f)
                     {
                         interactionData.Interract();
                         m_interacting = false;

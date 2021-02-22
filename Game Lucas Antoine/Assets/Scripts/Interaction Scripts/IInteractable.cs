@@ -15,6 +15,8 @@ public interface IInteractable
         // is the object interactable (ex : need a key to open
         bool IsInteractable { get; }
         
+        string ToolTipMessage { get; }
+        
     #endregion
 
     #region Methods
