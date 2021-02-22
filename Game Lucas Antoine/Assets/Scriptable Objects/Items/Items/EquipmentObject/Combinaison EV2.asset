@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba4536335abc124983e759fb9f89a2b, type: 3}
   m_Name: Combinaison EV2
   m_EditorClassIdentifier: 
-  prefab: {fileID: 733114572835310550, guid: 265e1b25f32ed62498506c1f383e8c76, type: 3}
+  Id: 2
+  uiDisplay: {fileID: -3548245318124798596, guid: 045b91fbc65b9d742b8ef3f061176eb3,
+    type: 3}
   type: 1
   description: "Version am\xE9lior\xE9e de la combinaison EV"
   speedMovementMultiplier: -1

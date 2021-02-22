@@ -8,29 +8,45 @@ public class Player : MonoBehaviour
 
     #region Variables
 
-    //Give the player an inventory
-    public InventoryObject inventory;
+        //Give the player an inventory
+        public InventoryObject inventory;
 
     #endregion
 
+    #region Built In Methods
 
-    // Check if colliding with something
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        // check if the object we collide with has an Item script:
-        var item = other.GetComponent<Item>();
-        //If it does have -> means its an object we want to add in inventory:
-        if (item)
+        if (Input.GetKeyDown(KeyCode.M))
         {
-            // We add to the player inv this item with amount 1
-            inventory.AddItem(item.item, 1);
-            // As we took the item, it needs to be destroy from scene bc we dont want to have infinite
-            Destroy(other.gameObject);
+            inventory.Save();
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            inventory.Load();
         }
     }
 
-    private void OnApplicationQuit()
-    {
-        inventory.Container.Clear();
-    }
+    // Check if colliding with something
+        private void OnTriggerEnter(Collider other)
+        {
+            // check if the object we collide with has an Item script:
+            var item = other.GetComponent<GroundItem>();
+            //If it does have -> means its an object we want to add in inventory:
+            if (item)
+            {
+                // We add to the player inv this item with amount 1
+                inventory.AddItem(new Item(item.item), 1);
+                // As we took the item, it needs to be destroy from scene bc we dont want to have infinite
+                Destroy(other.gameObject);
+            }
+        }
+
+        private void OnApplicationQuit()
+        {
+            inventory.Container.Items.Clear();
+        }
+
+    #endregion
+    
 }

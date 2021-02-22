@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class DisplayInventory : MonoBehaviour
 {
     // This class is used to display / update the inventory
 
     #region Variables
+
+    public GameObject inventoryPrefab;
     
     // Hold inventory to display
     public InventoryObject inventory;
@@ -42,38 +45,44 @@ public class DisplayInventory : MonoBehaviour
 
     public void CreateDisplay()
     {
-        for (int i = 0; i < inventory.Container.Count; i++)
+        for (int i = 0; i < inventory.Container.Items.Count; i++)
         {
+            InventorySlot slot = inventory.Container.Items[i];
+            
             // Instantiate the prefab of the item with transform of parent
-            var obj = Instantiate(inventory.Container[i].item.prefab, Vector3.zero, Quaternion.identity, transform);
+            var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, transform);
+            obj.transform.GetChild(0).GetComponentInChildren<Image>().sprite = inventory.itemDataBase.GetItem[slot.item.Id].uiDisplay;
             obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
             // get text mesh pro in child and set text to the amount of the current number of item
-            obj.GetComponentInChildren<TextMeshProUGUI>().text = inventory.Container[i].amount.ToString("n0");
+            obj.GetComponentInChildren<TextMeshProUGUI>().text = slot.amount.ToString("n0");
             // Then, need to add the item to the dictionnary:
-            itemDisplayed.Add(inventory.Container[i], obj);
+            itemDisplayed.Add(slot, obj);
         }
     }
 
     public void UpdateDisplay()
     {
-        for (int i = 0; i < inventory.Container.Count; i++)
+        for (int i = 0; i < inventory.Container.Items.Count; i++)
         {
+            InventorySlot slot = inventory.Container.Items[i];
+            
             // If the item slot exists
-            if (itemDisplayed.ContainsKey(inventory.Container[i]))
+            if (itemDisplayed.ContainsKey(inventory.Container.Items[i]))
             {
                 // Then, we take the txtMeshPro component in children of that slot and change its text value to the amount 
-                itemDisplayed[inventory.Container[i]].GetComponentInChildren<TextMeshProUGUI>().text = inventory.Container[i].amount.ToString();
+                itemDisplayed[slot].GetComponentInChildren<TextMeshProUGUI>().text = slot.amount.ToString();
             }
             else
             {
                 // If not in inv -> Create obj:
                 // Instantiate the prefab of the item with transform of parent
-                var obj = Instantiate(inventory.Container[i].item.prefab, Vector3.zero, Quaternion.identity, transform);
+                var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, transform);
+                obj.transform.GetChild(0).GetComponentInChildren<Image>().sprite = inventory.itemDataBase.GetItem[slot.item.Id].uiDisplay;
                 obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
                 // get text mesh pro in child and set text to the amount of the current number of item
-                obj.GetComponentInChildren<TextMeshProUGUI>().text = inventory.Container[i].amount.ToString("n0");
+                obj.GetComponentInChildren<TextMeshProUGUI>().text = slot.amount.ToString("n0");
                 // Then, need to add the item to the dictionnary:
-                itemDisplayed.Add(inventory.Container[i], obj);
+                itemDisplayed.Add(slot, obj);
             }
         }
     }

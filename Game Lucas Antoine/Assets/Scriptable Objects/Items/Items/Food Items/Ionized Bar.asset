@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 365a9cdc3ddeb9747a5c1923c3066ece, type: 3}
   m_Name: Ionized Bar
   m_EditorClassIdentifier: 
-  prefab: {fileID: 8966749516603220972, guid: 20e05875ab1efb542b4625806b4d754a, type: 3}
+  Id: 4
+  uiDisplay: {fileID: 3362789639699432236, guid: 045b91fbc65b9d742b8ef3f061176eb3,
+    type: 3}
   type: 0
   description: "Bar ionis\xE9s.\nSe conserve longtemps sous des radiations mod\xE9r\xE9es."
   restoreHungValue: 5

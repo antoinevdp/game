@@ -13,7 +13,7 @@ public class PickableItem : InteractableBase
     {
         base.OnInterract();
         
-        inventory.AddItem(item, 1);
+        inventory.AddItem(new Item(item), 1);
         Destroy(gameObject);
     }
 }
