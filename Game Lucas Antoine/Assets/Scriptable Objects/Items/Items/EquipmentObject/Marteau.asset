@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba4536335abc124983e759fb9f89a2b, type: 3}
   m_Name: Marteau
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 1288084858768990889, guid: ad9fb569efdba6445bb421252667ec79, type: 3}
   type: 1
   description: Normalement un outil mais peut se montrer utile pour survivre...
   speedMovementMultiplier: 0

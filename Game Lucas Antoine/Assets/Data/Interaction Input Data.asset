@@ -9,9 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f01a5cfecdb96c54092dd121af51c2aa, type: 3}
-  m_Name: Roche
+  m_Script: {fileID: 11500000, guid: 323f1937ae8dd1142843f700ff7a3612, type: 3}
+  m_Name: Interaction Input Data
   m_EditorClassIdentifier: 
-  prefab: {fileID: 4977963577320354425, guid: cb43b68c132b35040a5f3ebea214d4cd, type: 3}
-  type: 2
-  description: "Une simple roche de cette plan\xE8te.\nPas utilisable"

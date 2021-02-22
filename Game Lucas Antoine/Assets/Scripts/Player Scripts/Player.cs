@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 
     #endregion
 
+
     // Check if colliding with something
     private void OnTriggerEnter(Collider other)
     {

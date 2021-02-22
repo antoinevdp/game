@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba4536335abc124983e759fb9f89a2b, type: 3}
   m_Name: Combinaison EV
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 7002080372401792386, guid: 075dfb77d8b894e478c2622eef214cbf, type: 3}
   type: 1
   description: "Une combinaison pour les sorties extra-v\xE9hiculaire classiques."
   speedMovementMultiplier: -2
