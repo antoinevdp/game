@@ -8,6 +8,11 @@ public enum ItemType
     Equipment,
     Default
 }
+
+public enum Attributes
+{
+    
+}
 public abstract class ItemObject : ScriptableObject
 {
     public int Id;

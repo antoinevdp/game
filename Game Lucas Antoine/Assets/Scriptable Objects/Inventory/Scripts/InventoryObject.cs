@@ -11,15 +11,16 @@ using UnityEditor;
 public class InventoryObject : ScriptableObject
 {
     #region Variables
+    
+        //savePaths
+        public string savePath;
 
         // Inventory
         public Inventory Container;
-    
+
         //Database
         public ItemDataBase itemDataBase;
         
-        //savePaths
-        public string savePath;
 
         #endregion
 
